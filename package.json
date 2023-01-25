@@ -5,5 +5,11 @@
   "main": "index.js",
   "repository": "https://github.com/kmizu/minis",
   "author": "Kota Mizushima",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.4.0"
+  }
 }

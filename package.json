@@ -1,0 +1,9 @@
+{
+  "name": "minis",
+  "version": "0.0.1",
+  "description": "A Toy Programming Language",
+  "main": "index.js",
+  "repository": "https://github.com/kmizu/minis",
+  "author": "Kota Mizushima",
+  "license": "MIT"
+}

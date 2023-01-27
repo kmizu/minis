@@ -24,6 +24,18 @@ function tInt(value) {
     return new IntegerLiteral(value);
 }
 
+function tAssign(name, value) {
+    return new AssignmentExpression(name, value);
+}
+
+function tId(name) {
+    return new Identifier(name);
+}
+
+function tSequence(expressions) {
+    return new SequenceExpression(expressions);
+}
+
 class BinaryExpression extends Expression {
     constructor(operator, lhs, rhs) {
         super();
@@ -34,6 +46,23 @@ class BinaryExpression extends Expression {
     }
 }
 
+class SequenceExpression extends Expression {
+    constructor(...expressions) {
+        super();
+        this.type = 'Sequence';
+        this.expressions = expressions;
+    }
+}
+
+class AssignmentExpression extends Expression {
+    constructor(name, expression) {
+        super();
+        this.type = 'Assignment';
+        this.name = name;
+        this.expression = expression;
+    }
+}
+
 class IntegerLiteral extends Expression {
     constructor(value) {
         super();
@@ -41,4 +70,13 @@ class IntegerLiteral extends Expression {
         this.value = value;
     }
 }
-module.exports = {BinaryExpression, IntegerLiteral, tAdd, tSub, tMul, tDiv, tInt};
+
+class Identifier extends Expression {
+    constructor(name) {
+        super();
+        this.type = 'Identifier';
+        this.name = name;
+    }
+}
+
+module.exports = {BinaryExpression, IntegerLiteral, SequenceExpression, AssignmentExpression, Identifier, tAdd, tSub, tMul, tDiv, tInt, tSequence, tAssign, tId};

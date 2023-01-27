@@ -4,6 +4,26 @@ class Expression {
     }
 }
 
+function tAdd(a, b) {
+    return new BinaryExpression('+', a, b);
+}
+
+function tSub(a, b) {
+    return new BinaryExpression('-', a, b);
+}
+
+function tMul(a, b) {
+    return new BinaryExpression('*', a, b);
+}
+
+function tDiv(a, b) {
+    return new BinaryExpression('/', a, b);
+}
+
+function tInt(value) {
+    return new IntegerLiteral(value);
+}
+
 class BinaryExpression extends Expression {
     constructor(operator, lhs, rhs) {
         super();
@@ -21,4 +41,4 @@ class IntegerLiteral extends Expression {
         this.value = value;
     }
 }
-module.exports = {BinaryExpression, IntegerLiteral};
+module.exports = {BinaryExpression, IntegerLiteral, tAdd, tSub, tMul, tDiv, tInt};

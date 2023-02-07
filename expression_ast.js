@@ -32,8 +32,8 @@ function tId(name) {
     return new Identifier(name);
 }
 
-function tSequence(expressions) {
-    return new SequenceExpression(expressions);
+function tSequence(...expressions) {
+    return new SequenceExpression(...expressions);
 }
 
 class BinaryExpression extends Expression {

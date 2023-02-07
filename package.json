@@ -11,5 +11,8 @@
   },
   "devDependencies": {
     "jest": "^29.4.0"
+  },
+  "dependencies": {
+    "yarn": "^1.22.19"
   }
 }

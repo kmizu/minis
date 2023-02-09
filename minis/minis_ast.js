@@ -170,6 +170,6 @@ module.exports = {
     tProgram, tFunction,
     tAdd, tSub, tMul, tDiv, tInt,
     tLt, tGt, tLte, tGte, tEq, tNe,
-    tSequence: tSeq, tIf, tWhile,
+    tSeq, tIf, tWhile,
     tCall, tAssign, tId
 };

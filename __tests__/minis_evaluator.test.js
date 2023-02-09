@@ -1,39 +1,111 @@
 "use strict";
 const {evaluate, evaluateProgram} = require("../minis/minis_evaluator");
-const {tProgram, tFunction, tAdd, tSub, tMul, tDiv, tInt, tLt, tLte, tGt, tGte, tEq, tId, tAssign, tSequence, tWhile, tCall, tIf} = require('../minis/minis_ast');
+const {tProgram, tFunction, tAdd, tSub, tMul, tDiv, tInt, tLt, tLte, tGt, tGte, tEq, tNe, tId, tAssign, tSeq, tWhile, tCall, tIf} = require('../minis/minis_ast');
 
 test('1 + 1 == 2', () => {
-    const expression = tAdd(tInt(1), tInt(1));
-    expect(evaluate(expression, {})).toBe(2);
+    const e = tAdd(tInt(1), tInt(1));
+    expect(evaluate(e)).toBe(2);
+});
+
+test('1 + 2 + 3 == 7', () => {
+    const e = tAdd(tInt(1), tInt(1));
+    expect(evaluate(e)).toBe(2);
 });
 
 test('1 - 1 == 0', () => {
-const expression = tSub(tInt(1), tInt(1));
-    expect(evaluate(expression, {})).toBe(0);
+    const e = tSub(tInt(1), tInt(1));
+    expect(evaluate(e)).toBe(0);
+});
+
+test('1 - 2 == 0', () => {
+    const e = tSub(tInt(1), tInt(2));
+    expect(evaluate(e)).toBe(-1);
+});
+
+test('1 * 1 == 1', () => {
+    const e = tMul(tInt(1), tInt(1));
+    expect(evaluate(e)).toBe(1);
+});
+
+test('1 * 0 == 0', () => {
+    const e = tMul(tInt(1), tInt(0));
+    expect(evaluate(e)).toBe(0);
+});
+
+test('2 * 2 == 4', () => {
+    const e = tMul(tInt(2), tInt(2));
+    expect(evaluate(e)).toBe(4);
+});
+
+test('0 / 1 == 0', () => {
+    const e = tDiv(tInt(0), tInt(1));
+    expect(evaluate(e)).toBe(0);
+});
+
+test('2 / 1 == 2', () => {
+    const e = tDiv(tInt(2), tInt(1));
+    expect(evaluate(e)).toBe(2);
 });
 
 test('6 / 2 == 3', () => {
-const expression = tDiv(tInt(6), tInt(2));
-    expect(evaluate(expression, {})).toBe(3);
+    const e = new tDiv(tInt(6), tInt(2));
+    expect(evaluate(e)).toBe(3);
 });
 
-test('1 + (2 * 3) == 7', () => {
-    const expression = tAdd(tInt(1), tMul(tInt(2), tInt(3)));
-    expect(evaluate(expression, {})).toBe(7);
+test('(1 + (2 * 3) - 1) / 2 == 3', () => {
+    const e = tDiv(
+        tSub(
+            tAdd(tInt(1),
+                tMul(tInt(2), tInt(3))
+            ),
+            tInt(1)),
+        tInt(2)
+    );
+    expect(evaluate(e)).toBe(3);
+});
+
+test('1 < 2 == 1', () => {
+    const e = tLt(tInt(1), tInt(2));
+    expect(evaluate(e)).toBe(1);
+});
+
+test('2 > 1 == 1', () => {
+    const e = tGt(tInt(2), tInt(1));
+    expect(evaluate(e)).toBe(1);
+});
+
+test('1 <= 1 == 1', () => {
+    const e = tLte(tInt(1), tInt(1));
+    expect(evaluate(e)).toBe(1);
+});
+
+test('1 >= 1 == 1', () => {
+    const e = tGte(tInt(1), tInt(1));
+    expect(evaluate(e)).toBe(1);
+});
+
+test('1 == 1 == 1', () => {
+    const e = tEq(tInt(1), tInt(1));
+    expect(evaluate(e)).toBe(1);
+});
+
+test('1 != 0 == 1', () => {
+    const e = tNe(tInt(1), tInt(0));
+    expect(evaluate(e)).toBe(1);
 });
 
 test('{a = 100; a} == 100', () => {
-    const expression = tSequence(tAssign('a', tInt(100)), tId('a'));
-    expect(evaluate(expression, {})).toBe(100);
+    const e= tSeq(tAssign('a', tInt(100)), tId('a'));
+    expect(evaluate(e, {})).toBe(100);
 });
 
-test('{a = 100; b = a + 150; b} == 250', () => {
-    const expression = tSequence(
+test('{a = 100; b = a + 1; b} == 101', () => {
+    const expression = tSeq(
         tAssign('a', tInt(100)),
-        tAssign('b', tAdd(tId('a'), tInt(150))),
+        tAssign('b', tAdd(tId('a'), tInt(1))),
         tId('b')
     );
-    expect(evaluate(expression, {})).toBe(250);
+    expect(evaluate(expression, {})).toBe(101);
 });
 
 test('(if(1 < 2) 2 else 1) == 2', () => {
@@ -63,7 +135,7 @@ test(`{
       1000;
     }
  } == 500`, () => {
-    const expression = tSequence(
+    const expression = tSeq(
         tAssign('a', tInt(100)),
         tAssign('b', tInt(200)),
         tIf(tLt(tId('a'), tId('b')), tInt(500), tInt(1000)),

@@ -13,47 +13,49 @@ function evaluateProgram(program) {
     return result;
 }
 
+function evaluateMathExpr(e, env) {
+    switch(e.op) {
+        case '+': return evaluate(e.lhs, env) + evaluate(e.rhs, env);
+        case '-': return evaluate(e.lhs, env) - evaluate(e.rhs, env);
+        case '*': return evaluate(e.lhs, env) * evaluate(e.rhs, env);
+        case '/': return evaluate(e.lhs, env) / evaluate(e.rhs, env);
+    }
+}
+
+function evaluateCompExpr(e, env) {
+    switch(e.op) {
+        case '<': return evaluate(e.lhs, env) < evaluate(e.rhs, env) ? 1 : 0;
+        case '>': return evaluate(e.lhs, env) > evaluate(e.rhs, env) ? 1 : 0;
+        case '<=': return evaluate(e.lhs, env) <= evaluate(e.rhs, env) ? 1 : 0;
+        case '>=': return evaluate(e.lhs, env) >= evaluate(e.rhs, env) ? 1 : 0;
+        case '==': return evaluate(e.lhs, env) === evaluate(e.rhs, env) ? 1 : 0;
+        case '!=': return evaluate(e.lhs, env) !== evaluate(e.rhs, env) ? 1 : 0;
+    }
+}
+
 function evaluate(e, env) {
     if(e instanceof MBinExpr) {
         const op = e.op;
         switch(op) {
             case '+':
-                return evaluate(e.lhs, env) + evaluate(e.rhs, env);
             case '-':
-                return evaluate(e.lhs, env) - evaluate(e.rhs, env);
             case '*':
-                return evaluate(e.lhs, env) * evaluate(e.rhs, env);
             case '/':
-                return evaluate(e.lhs, env) / evaluate(e.rhs, env);
+                return evaluateMathExpr(e, env);
             case '<':
-                return evaluate(e.lhs, env) < evaluate(e.rhs, env) ? 1 : 0;
             case '>':
-                return evaluate(e.lhs, env) > evaluate(e.rhs, env) ? 1 : 0;
             case '<=':
-                return evaluate(e.lhs, env) <= evaluate(e.rhs, env) ? 1 : 0;
             case '>=':
-                return evaluate(e.lhs, env) >= evaluate(e.rhs, env) ? 1 : 0;
             case '==':
-                return evaluate(e.lhs, env) === evaluate(e.rhs, env) ? 1 : 0;
             case '!=':
-                return evaluate(e.lhs, env) !== evaluate(e.rhs, env) ? 1 : 0;
+                return evaluateCompExpr(e, env);
         }
-    } else if(e instanceof MInt){
-        return e.value;
     } else if(e instanceof MSeq) {
         let result;
         e.bodies.forEach(e => {
             result = evaluate(e, env);
         });
         return result;
-    } else if(e instanceof MCall) {
-        const func = env[e.name];
-        const args = e.args.map(arg => evaluate(arg, env));
-        const newEnvironment = {...env};
-        args.forEach((arg, i) => {
-            newEnvironment[func.params[i]] = arg;
-        });
-        return evaluate(func.body, newEnvironment);
     } else if(e instanceof MIf) {
         const condition = evaluate(e.condition, env);
         if (condition !== 0) {
@@ -76,6 +78,16 @@ function evaluate(e, env) {
         return env[e.name];
     } else if(e instanceof MIdent) {
         return env[e.name];
+    } else if(e instanceof MCall) {
+        const func = env[e.name];
+        const args = e.args.map(arg => evaluate(arg, env));
+        const newEnvironment = {...env};
+        args.forEach((arg, i) => {
+            newEnvironment[func.params[i]] = arg;
+        });
+        return evaluate(func.body, newEnvironment);
+    } else if(e instanceof MInt){
+        return e.value;
     } else {
         console.assert(false);
     }

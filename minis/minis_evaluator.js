@@ -65,7 +65,6 @@ function evaluate(e, env) {
         }
     } else if(e instanceof MWhile) {
         let condition = evaluate(e.condition, env);
-        console.log("condition = "+ condition);
         while (condition !== 0) {
             e.bodies.forEach(body => {
                 evaluate(body, env);

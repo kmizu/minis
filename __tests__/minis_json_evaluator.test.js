@@ -1,5 +1,5 @@
 "use strict";
-const {evaluateJson} = require("../minis/minis_json_evaluator");
+const {evaluateJson, evaluateJsonProgram} = require("../minis/minis_json_evaluator");
 
 test(`evaluateJson("1") == 1` ,() => {
     const e = `1`;
@@ -92,3 +92,16 @@ test(`
     }`;
     expect(evaluateJson(e)).toBe(10);
 })
+
+test(`
+    def add(a, b) {
+        return a + b;
+    },
+    add(1, 2)
+==> 3`, () => {
+    const program = `[
+        {"type": "def", "name": "add", "params": ["a", "b"], "body": {"type": "+", "operands": [{"type": "id", "name": "a"}, {"type": "id", "name": "b"}]}},
+        {"type": "call", "name": "add", "args": [1, 2]}
+    ]`;
+    expect(evaluateJsonProgram(program)).toBe(3);
+});

@@ -1,0 +1,16 @@
+name =  "minis"
+version = "0.0.1"
+description = "A Toy Programming Language"
+main = "index.js"
+repository = "https://github.com/kmizu/minis"
+author = "Kota Mizushima"
+license = "MIT"
+scripts = new {
+  test = "jest"
+}
+devDependencies = new {
+  jest = "^29.4.0"
+}
+dependencies = new {
+  yarn = "^1.22.21"
+}

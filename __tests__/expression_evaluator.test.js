@@ -2,22 +2,22 @@
 const {evaluate} = require("../expression/expression_evaluator");
 const {tAdd, tSub, tMul, tDiv, tInt} = require('../expression/expression_ast');
 
-test('1 + 1 == 2', () => {
+test('1 + 1 ==> 2', () => {
     const e = tAdd(tInt(1), tInt(1));
     expect(evaluate(e)).toBe(2);
 });
 
-test('1 + 2 + 3 == 7', () => {
-    const e = tAdd(tInt(1), tInt(1));
-    expect(evaluate(e)).toBe(2);
+test('1 + 2 + 3 ==> 6', () => {
+    const e = tAdd(tInt(1), tAdd(tInt(2), tInt(3)));
+    expect(evaluate(e)).toBe(6);
 });
 
-test('1 - 1 == 0', () => {
+test('1 - 1 ==> 0', () => {
     const e = tSub(tInt(1), tInt(1));
     expect(evaluate(e)).toBe(0);
 });
 
-test('1 - 2 == 0', () => {
+test('1 - 2 ==> -1', () => {
     const e = tSub(tInt(1), tInt(2));
     expect(evaluate(e)).toBe(-1);
 });

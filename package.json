@@ -7,10 +7,12 @@
   "author": "Kota Mizushima",
   "license": "MIT",
   "scripts": {
+    "visualizer": "npx serve ast-visualizer -l 3000",
     "test": "jest"
   },
   "devDependencies": {
-    "jest": "^29.4.0"
+    "jest": "^29.4.0",
+    "serve": "^14.0.0"
   },
   "dependencies": {
     "yarn": "^1.22.21"

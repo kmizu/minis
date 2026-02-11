@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minis AST Visualizer</title>
+  <link rel="stylesheet" href="visualizer.css">
+  <script src="d3.v7.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>Minis AST Visualizer</h1>
+      <div id="toolbar">
+        <select id="example-select"></select>
+        <div id="controls">
+          <button id="btn-step" title="1ステップ進む">Step</button>
+          <button id="btn-auto" title="自動実行">Auto</button>
+          <button id="btn-reset" title="リセット">Reset</button>
+          <button id="btn-run" title="最後まで実行">Run to End</button>
+          <label id="speed-label">
+            速度:
+            <input type="range" id="speed" min="100" max="2000" value="500" step="100">
+            <span id="speed-value">500ms</span>
+          </label>
+          <label id="reduce-label">
+            <input type="checkbox" id="reduce-toggle" checked>
+            簡約表示
+          </label>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div id="tree-panel">
+        <svg id="ast-svg"></svg>
+      </div>
+      <div id="side-panel">
+        <div id="env-panel">
+          <h3>環境 (Environment)</h3>
+          <table id="env-table">
+            <thead><tr><th>変数名</th><th>値</th></tr></thead>
+            <tbody></tbody>
+          </table>
+          <p id="env-empty" class="empty-msg">変数なし</p>
+        </div>
+        <div id="step-panel">
+          <h3>ステップ情報</h3>
+          <p id="step-description">プリセットを選択してください</p>
+          <p id="step-count"></p>
+          <p id="result-value"></p>
+        </div>
+        <div id="expr-panel">
+          <h3>数式入力</h3>
+          <input type="text" id="expr-input" placeholder="例: 1 + 2 * 3">
+          <button id="btn-parse-expr">Parse & Visualize</button>
+          <p id="expr-error" class="error-msg"></p>
+        </div>
+        <div id="json-panel">
+          <h3>JSON入力モード</h3>
+          <textarea id="json-input" rows="5" placeholder='例: ["+", 1, ["*", 2, 3]]'></textarea>
+          <button id="btn-parse-json">Parse & Visualize</button>
+          <p id="json-error" class="error-msg"></p>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="visualizer.js"></script>
+</body>
+</html>

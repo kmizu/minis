@@ -1,0 +1,330 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+  background: #1a1a2e;
+  color: #e0e0e0;
+  min-height: 100vh;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+header {
+  background: #16213e;
+  padding: 12px 20px;
+  border-bottom: 2px solid #3a4a6a;
+}
+
+header h1 {
+  font-size: 1.2rem;
+  color: #e94560;
+  margin-bottom: 8px;
+}
+
+#toolbar {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#example-select {
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 1px solid #4a5a7a;
+  background: #1a1a2e;
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  min-width: 280px;
+}
+
+#controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+#controls button {
+  padding: 6px 16px;
+  border: 1px solid #4a5a7a;
+  border-radius: 4px;
+  background: #2a3a5a;
+  color: #e0e0e0;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s;
+}
+
+#controls button:hover {
+  background: #e94560;
+}
+
+#controls button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+#speed-label {
+  font-size: 0.8rem;
+  color: #a0a0a0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+#speed {
+  width: 100px;
+}
+
+#speed-value {
+  min-width: 40px;
+}
+
+#reduce-label {
+  font-size: 0.8rem;
+  color: #a0a0a0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+#reduce-label input[type="checkbox"] {
+  cursor: pointer;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  flex: 1;
+  overflow: hidden;
+}
+
+#tree-panel {
+  overflow: auto;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+#ast-svg {
+  min-width: 400px;
+  min-height: 300px;
+}
+
+#side-panel {
+  background: #16213e;
+  border-left: 2px solid #3a4a6a;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#side-panel h3 {
+  font-size: 0.9rem;
+  color: #e94560;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #3a4a6a;
+  padding-bottom: 4px;
+}
+
+#env-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+#env-table th {
+  text-align: left;
+  padding: 4px 8px;
+  background: #2a3a5a;
+  color: #e94560;
+}
+
+#env-table td {
+  padding: 4px 8px;
+  border-bottom: 1px solid #1a1a2e;
+}
+
+#env-table tr.changed td {
+  background: rgba(233, 69, 96, 0.2);
+  color: #fff;
+}
+
+.empty-msg {
+  font-size: 0.8rem;
+  color: #666;
+  font-style: italic;
+}
+
+#step-description {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  min-height: 2em;
+}
+
+#step-count {
+  font-size: 0.8rem;
+  color: #a0a0a0;
+}
+
+#result-value {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #53d769;
+}
+
+/* 数式入力パネル */
+#expr-panel input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #4a5a7a;
+  background: #1a1a2e;
+  color: #e0e0e0;
+  font-family: 'Fira Code', 'Consolas', monospace;
+  font-size: 0.9rem;
+}
+
+#expr-panel input[type="text"]::placeholder {
+  color: #666;
+}
+
+#expr-panel button {
+  margin-top: 8px;
+  padding: 6px 12px;
+  border: 1px solid #4a5a7a;
+  border-radius: 4px;
+  background: #2a3a5a;
+  color: #e0e0e0;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+#expr-panel button:hover {
+  background: #e94560;
+}
+
+/* JSON入力パネル */
+#json-panel textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #4a5a7a;
+  background: #1a1a2e;
+  color: #e0e0e0;
+  font-family: monospace;
+  font-size: 0.85rem;
+  resize: vertical;
+}
+
+#json-panel button {
+  margin-top: 8px;
+  padding: 6px 12px;
+  border: 1px solid #4a5a7a;
+  border-radius: 4px;
+  background: #2a3a5a;
+  color: #e0e0e0;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+#json-panel button:hover {
+  background: #e94560;
+}
+
+.error-msg {
+  color: #e94560;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+/* D3 ツリーノード */
+.node rect {
+  rx: 6;
+  ry: 6;
+  stroke-width: 2;
+}
+
+.node text {
+  font-size: 13px;
+  font-family: 'Fira Code', 'Consolas', monospace;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.node .label {
+  fill: #e0e0e0;
+}
+
+.node .value-label {
+  fill: #53d769;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+/* リンク（エッジ） */
+.link {
+  fill: none;
+  stroke: #7a8aaa;
+  stroke-width: 2;
+}
+
+.link-done {
+  fill: none;
+  stroke: #53d769;
+  stroke-width: 2;
+  stroke-opacity: 0.6;
+}
+
+.link-active {
+  fill: none;
+  stroke: #ff6b81;
+  stroke-width: 2.5;
+  stroke-opacity: 0.8;
+}
+
+/* ノード状態 */
+.node-default rect {
+  fill: #2e3452;
+  stroke: #5a6a8a;
+}
+
+.node-active rect {
+  fill: #e94560;
+  stroke: #ff6b81;
+  filter: drop-shadow(0 0 8px rgba(233, 69, 96, 0.5));
+}
+
+.node-done rect {
+  fill: #1e5631;
+  stroke: #53d769;
+}
+
+.node-env-write rect {
+  fill: #4a3000;
+  stroke: #ffa502;
+}
+
+/* 簡約されたノード */
+.node-collapsed rect {
+  fill: #1a4a2a;
+  stroke: #53d769;
+  stroke-dasharray: 4 2;
+}
+
+.node-collapsed .label {
+  fill: #53d769;
+  font-weight: bold;
+}

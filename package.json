@@ -7,7 +7,6 @@
   "author": "Kota Mizushima",
   "license": "MIT",
   "scripts": {
-    "visualizer": "npx serve ast-visualizer -l 3000",
     "test": "jest"
   },
   "devDependencies": {

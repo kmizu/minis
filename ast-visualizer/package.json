@@ -1,0 +1,15 @@
+{
+  "name": "ast-visualizer",
+  "version": "0.0.1",
+  "description": "An AST Visualizer",
+  "repository": "https://github.com/kmizu/minis/tree/main/ast-visualizer",
+  "author": "Kota Mizushima",
+  "license": "MIT",
+  "scripts": {
+    "visualizer": "npx serve . -l 3000"
+  },
+  "devDependencies": {
+    "jest": "^29.4.0",
+    "serve": "^14.0.0"
+  }
+}
